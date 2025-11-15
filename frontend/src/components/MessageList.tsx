@@ -1,6 +1,6 @@
 import type { ChatPayload } from "../types";
 
-//receive list of messages and identifier (socketId)
+//receive list of messages and senderId (socketId)
 interface MessageListProps{
     messages: ChatPayload[]
     socketId: string;
@@ -13,9 +13,9 @@ export function MessageList({messages, socketId}: MessageListProps){
         <div>
             <h1 style={{textAlign: "center"}}>Chat de mensagens</h1>
             {messages.map((msg, index) =>  {
-            const userSliced = msg.username || msg.identifier.slice(0,6)
-            const isSystem = msg.identifier === 'system'
-            const isMe = msg.identifier === socketId
+            const userSliced = msg.username || msg.senderId.slice(0,6)
+            const isSystem = msg.senderId === 'system'
+            const isMe = msg.senderId === socketId
             const dateConverted = new Date(msg.date).toLocaleString('pt-BR', {
                 hour: '2-digit',
                 minute: '2-digit'

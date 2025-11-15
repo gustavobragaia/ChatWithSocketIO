@@ -26,6 +26,8 @@ export default function App(){
   useEffect(() => {
   //connection inicialized
   socket.on('connect', ()=>{})
+  //get history
+  socket.on('room history', handleHistoryOfMessages)
   //events inicialized
   socket.on('chat message', onMessage)
 
@@ -35,6 +37,8 @@ export default function App(){
     // cleanup of component when be unbuilded
     socket.off('connect');
     socket.off('chat message')
+    socket.off('room history')
+
     socket.disconnect();
   };
 }, []);
@@ -75,7 +79,7 @@ export default function App(){
 
     const payload: ChatPayload = {
       content: message,
-      identifier: socket.id || 'unknown',
+      senderId: socket.id || 'unknown',
       date: Date.now(),
       username: username,
       room: room
@@ -99,11 +103,16 @@ export default function App(){
     socket.emit('join room', roomInput.trim()) //emit to socket the room
     const newUrlWithRoom = `${window.location.origin}?room=${roomInput.trim()}`
     window.history.pushState({}, '', newUrlWithRoom) //redirect to new url with room
+
   }
 
   function getAllRooms(){
     socket.emit('get rooms')
     setVisibleListOfRoom(true)
+  }
+
+  function handleHistoryOfMessages(history: ChatPayload[]){
+    setListMessages(history)
   }
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 export interface ChatPayload {
   content: string;
-  identifier: string;
+  senderId: string;
   date: number;
   username: string;
   room: string;
