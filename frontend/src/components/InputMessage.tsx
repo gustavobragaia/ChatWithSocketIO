@@ -11,6 +11,7 @@ export function InputMessage({message, onChange, onSubmit}: InputMessageProps){
     return(
         <>
             <input 
+            className="input input--ghost"
             type="text" 
             id="input"
             value={message}
@@ -21,7 +22,7 @@ export function InputMessage({message, onChange, onSubmit}: InputMessageProps){
                 onSubmit()
                 }
             }} />
-            <button onClick={onSubmit}>Send</button>
+            <button className="btn" onClick={onSubmit}>Send</button>
         </>
         )   
         }
