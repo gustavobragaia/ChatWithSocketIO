@@ -1,9 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -16,14 +13,20 @@ model Message {
   userId    String
   content   String
   createdAt DateTime @default(now())
-
-  room   Room   @relation(fields: [roomId], references: [id]) //roomId is foregn key, id is RoomID
-  roomId String
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id])
 }
 
 model Room {
-  id        String   @id
-  createdAt DateTime @default(now())
+  id        String    @id @unique
+  createdAt DateTime  @default(now())
+  messages  Message[]
+}
 
-  messages Message[] //1 to N relation
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  nickname  String
+  createdAt DateTime @default(now())
 }
