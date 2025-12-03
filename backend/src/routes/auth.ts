@@ -47,20 +47,15 @@ AuthRouter.post("/register", async (req, res)=>{
             message: "Sucess in register this user",
             token,
             user: {
-                email,
-                password,
-                nickname
+                email: newUser.email,
+                nickname: newUser.nickname,
+                id: newUser.id
             }
         })
 })
 
 AuthRouter.post("/login", async (req, res)=> {
     const {email, password} = req.body
-
-    fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        body: JSON.stringify({email, password})
-    })
 
     if(!email || !password){
         return res
@@ -102,7 +97,6 @@ AuthRouter.post("/login", async (req, res)=> {
                 id: user.id,
                 nickname: user.nickname,
                 email: user.email,
-                password: user.password
             }
         }
     )

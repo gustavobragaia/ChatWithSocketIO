@@ -7,9 +7,13 @@ import {
     getLastMessages
     } from './db/Repository/ChatRepository'
 import cors from "cors";
+import jwt from 'jsonwebtoken';
 import { AuthRouter } from './routes/auth';
+import { authMiddleware } from './middleware/auth';
+import { ProtectedRouter } from './routes/protected';
 
-interface ChatPayload{
+interface ChatPayload
+{
     content: string,
     senderId: string,
     date: number //timestamp (Date.now())
@@ -26,22 +30,38 @@ app.use(cors({
 }));
 const server = createServer(app)
 
-
-
 const io = new Server(server, {
   cors: { origin: "http://localhost:5173", methods: ["GET", "POST"] },
   connectionStateRecovery: {}
 });
+
+//recover user info of middleware
+io.use((socket, next) => {
+  const token = socket.handshake.auth?.token;
+  if (!token) return next(new Error('Missing token'));
+  try {
+    socket.data.user = jwt.verify(token, process.env.JWT_SECRET!);
+    return next();
+  } catch {
+    return next(new Error('Invalid token'));
+  }
+});
+
 
 io.on('connection', (socket) => {
 
     //join in a room
     socket.on('join room', async ({roomName, username})=>{
         await ensureRoomExists(roomName)
+
+        // prefer nickname from token; fallback to payload
+        const nickname = socket.data.user?.nickname || username;
+        const userId = socket.data.user?.userId;
         
         socket.join(roomName)
         socket.data.room = roomName
-        socket.data.username = username
+        socket.data.username = nickname
+        socket.data.userId = userId
         console.log('Joined room:', roomName)
         
         //if room exists, get history
@@ -52,16 +72,17 @@ io.on('connection', (socket) => {
 
         //send history for this socket
         socket.emit('room history', 
-            history.map(({content, userId, createdAt}) => ({
+            history.map(({content, userId, createdAt, user}) => ({
             content,
             senderId: userId,
+            username: user?.nickname || 'unknown',
             date: createdAt.getTime(),
             room: roomName,
         })))
 
         //connect and disconnect user
         socket.to(roomName).emit('chat message', {
-            content: `User ${username} joined`,
+            content: `User ${nickname} joined`,
             senderId: 'system',
             date: Date.now(),
             room: roomName,
@@ -86,14 +107,21 @@ io.on('connection', (socket) => {
     socket.on('chat message', async (payload: ChatPayload)=>{
         console.log(payload)
         console.log(payload.username)
+
+        const nickname = socket.data.username || payload.username
+        const userId = socket.data.userId || payload.senderId
         
         await createMessage({
             content: payload.content,
             roomId: payload.room,
-            senderId: payload.username
+            senderId: userId
         })
 
-        io.to(payload.room).emit('chat message', payload)
+        io.to(payload.room).emit('chat message', {
+            ...payload,
+            username: nickname,
+            senderId: userId
+        })
     })
     
 
@@ -119,5 +147,7 @@ app.get('/', (_,res)=> res.send('ok'))
 
 //auth route
 app.use("/auth", AuthRouter)
+//protected route
+app.use('/protected', authMiddleware, ProtectedRouter)
 
 server.listen(3000, ()=>{})

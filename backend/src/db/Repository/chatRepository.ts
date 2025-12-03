@@ -31,6 +31,13 @@ export async function getLastMessages(params: {roomId: string, limit?: number}){
         where: {roomId},
         orderBy: {createdAt: 'desc'},
         take: limit,
+        include: {
+            user: {
+                select: {
+                    nickname: true,
+                }
+            }
+        }
     })
 
     return messages.reverse()
