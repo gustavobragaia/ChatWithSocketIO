@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "./Register.css"
 
 export default function Register(){
 
@@ -32,9 +33,10 @@ export default function Register(){
         localStorage.setItem("user", JSON.stringify(result.user))
         console.log(result)
         navigate("/chat")
-
     }
-        
+    function handleRedirectLogin(){
+        navigate("/")
+    }
     return(
         <div>
             <form onSubmit={handleSubmit}>
@@ -61,6 +63,8 @@ export default function Register(){
                 /> 
                 <button type="submit">Create account</button>
             </form>
+            <button onClick={handleRedirectLogin}>Create account</button>
+
         </div>
     )
 }

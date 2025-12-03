@@ -1,0 +1,79 @@
+/* Deixa o fundo geral com vibe Twitter */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0f1419; /* fundo escuro tipo Twitter X */
+  color: #e7e9ea;
+}
+
+/* Centraliza o form na tela */
+div > form {
+  max-width: 400px;
+  margin: 8vh auto;
+  padding: 32px 28px;
+  background-color: #15202b;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(15, 20, 25, 0.6);
+  border: 1px solid #38444d;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Inputs com estilo “Twitter-like” */
+div > form input[type="text"],
+div > form input[type="email"],
+div > form input[type="password"] {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #38444d;
+  background-color: #15202b;
+  color: #e7e9ea;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Foco azul bonitinho */
+div > form input:focus {
+  border-color: #1d9bf0;
+  background-color: #1b2733;
+  box-shadow: 0 0 0 1px #1d9bf0;
+}
+
+/* Placeholder mais suave */
+div > form input::placeholder {
+  color: #8b98a5;
+}
+
+/* Botão estilo “Tweet” */
+div > form button[type="submit"] {
+  margin-top: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1d9bf0;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.05s ease;
+}
+
+/* Hover no botão */
+div > form button[type="submit"]:hover {
+  background-color: #1a8cd8;
+  box-shadow: 0 0 15px rgba(29, 155, 240, 0.5);
+}
+
+/* Clique */
+div > form button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* Mobile-friendly */
+@media (max-width: 480px) {
+  div > form {
+    margin: 5vh 16px;
+    padding: 24px 20px;
+  }
+}

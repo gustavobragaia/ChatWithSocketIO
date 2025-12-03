@@ -1,0 +1,279 @@
+/* ===== BASE GERAL ===== */
+
+.chat-page {
+  display: flex;
+  min-height: 100vh;
+  background: #0f1419;
+  color: #e7e9ea;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Tudo que for input / botão / select dentro do chat */
+.chat-page input,
+.chat-page textarea,
+.chat-page select {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid #38444d;
+  background-color: #15202b;
+  color: #e7e9ea;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.05s ease;
+}
+
+.chat-page input::placeholder,
+.chat-page textarea::placeholder {
+  color: #8b98a5;
+}
+
+.chat-page input:focus,
+.chat-page textarea:focus,
+.chat-page select:focus {
+  border-color: #1d9bf0;
+  background-color: #1b2733;
+  box-shadow: 0 0 0 1px #1d9bf0;
+}
+
+/* Botões padrão dentro do chat */
+.chat-page button {
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 14px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.05s ease,
+    border-color 0.2s ease;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+
+.chat-sidebar {
+  width: 28%;
+  max-width: 320px;
+  padding: 24px 20px;
+  border-right: 1px solid #38444d;
+  background-color: #0f1419;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chat-sidebar-title {
+  font-size: 18px;
+  margin: 0 0 8px 0;
+}
+
+.chat-main {
+  flex: 1;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== BOTÕES ===== */
+
+.btn-primary {
+  background-color: #1d9bf0;
+  color: #ffffff;
+  padding: 10px 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background-color: #1a8cd8;
+  box-shadow: 0 0 15px rgba(29, 155, 240, 0.5);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #38444d;
+  color: #1d9bf0;
+  font-weight: 500;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(29, 155, 240, 0.1);
+  border-color: #1d9bf0;
+  color: #e7e9ea;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* ===== INPUTS ESPECÍFICOS ===== */
+
+.room-input-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.room-input {
+  flex: 1;
+}
+
+.message-input-wrapper {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid #38444d;
+}
+
+/* ===== LISTA DE SALAS (ListingRooms) ===== */
+
+/* Ajuste genérico – se ListingRooms renderizar uma UL/OL ou DIV */
+.listing-rooms,
+.room-list-wrapper {
+  max-height: 40vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.listing-rooms::-webkit-scrollbar,
+.room-list-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.listing-rooms::-webkit-scrollbar-thumb,
+.room-list-wrapper::-webkit-scrollbar-thumb {
+  background: #38444d;
+  border-radius: 999px;
+}
+
+/* Se você tiver classes nos itens da sala, pode usar algo assim: */
+.room-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 12px;
+  margin-bottom: 4px;
+  background-color: #15181c;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.room-item:hover {
+  background-color: #1b2733;
+  border-color: #1d9bf0;
+}
+
+/* ===== USERNAME FORM (UsernameForm) ===== */
+
+.username-form {
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  border-radius: 16px;
+  border: 1px solid #38444d;
+  background-color: #15181c;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.username-form label {
+  font-size: 14px;
+  color: #8b98a5;
+}
+
+.username-form input {
+  width: 100%;
+}
+
+/* ===== MESSAGE LIST (MessageList) ===== */
+
+.message-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px;
+  border-radius: 16px;
+  border: 1px solid #38444d;
+  background-color: #15181c;
+  overflow-y: auto;
+}
+
+.message-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+  background: #38444d;
+  border-radius: 999px;
+}
+
+.message-item {
+  max-width: 70%;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background-color: #192734;
+  word-wrap: break-word;
+  font-size: 14px;
+}
+
+.message-item.me {
+  margin-left: auto;
+  background-color: #1d9bf0;
+  color: #ffffff;
+}
+
+.message-meta {
+  font-size: 11px;
+  opacity: 0.75;
+  margin-bottom: 2px;
+}
+
+.message-content {
+  font-size: 14px;
+}
+
+/* ===== TYPING USER (TypingUser) ===== */
+
+.typing-user {
+  font-size: 12px;
+  color: #8b98a5;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+  .chat-page {
+    flex-direction: column;
+  }
+
+  .chat-sidebar {
+    width: 100%;
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #38444d;
+  }
+
+  .chat-main {
+    padding-top: 16px;
+  }
+
+  .message-list {
+    max-height: 50vh;
+  }
+}

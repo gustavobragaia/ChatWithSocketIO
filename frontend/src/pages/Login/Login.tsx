@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "./Login.css"  
 
 export default function Login(){
 
@@ -33,6 +34,9 @@ export default function Login(){
 
         navigate("/chat")
     }
+    function handleRedirectRegister(){
+        navigate("/register")
+    }
         
     return(
         <div>
@@ -53,6 +57,9 @@ export default function Login(){
                 /> 
                 <button type="submit">Login</button>
             </form>
+
+            <button onClick={handleRedirectRegister}>Register</button>
+
         </div>
     )
 }
